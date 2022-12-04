@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <title>Java Quiz</title>
+</head>
+
+<body>
+    <header>
+        <h1>Javascript Quiz</h1>
+    </header>
+    <!--the .container div contains all the elements on the page-->
+    <div class="container">
+        <!--the timer container is the box for the timer-->
+        <div class="box" id="timer">
+            <h2>Time Remaining</h2>
+            <h2 id="time"></h2>
+        </div>
+        <!--the start button is the only button created here and not through dom tree manipulation-->
+        <button id="start-button">Start</button>
+        <!--this box contains the hi-scores-->
+        <div class="box" id="score">
+            <h2>Hi Scores</h2>
+            <div id="score-container"></div>
+        </div>
+        <!--this is the main gameplay box where the questions and score input appear-->
+        <div class="box" id="main">
+            <!--the .object heading is where the writted question goes-->
+            <h1 id="object"></h1>
+            <!--the #answer-bank is the location within the #main box where the answer buttons go-->
+            <div id="answer-bank" class="answer-bank"></div>
+        </div>
+    </div>
+    <footer>
+        <p>Made by Harry Hamlin</p>
+    </footer>
+
+    <script src="./assets/js/script.js"></script>
+</body>
+
+</html>
