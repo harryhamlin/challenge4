@@ -14,12 +14,18 @@ let divElAnswerBank = document.createElement("div");
 let scoreEl = document.querySelector("#score");
 // question bank arranged as an array within an array, the correct answers are indicated with an @ symbol
 let questionBank = [
-    ["Which of the following key words is used to define a variable in Javascript?", "var", "letVar", "const", "@Both a and c"],
+    ["Which of the following key words is used to define a variable in JavaScript?", "var", "letVar", "const", "@Both a and c"],
     ["Which of the following methods would display an alert via a pop-up window?", "document.display", "@window.alert", "console.log", "var.textContent"],
     ["Which is the correct method for turning a string into an array?", ".arrayify()", "@.split()", ".array()", ".open()"],
     ["What methods can be used to target an element via the DOM tree?", ".querySelector()", ".getElementById()", "getElementsByClass()", "@All of the above"],
-    ["Which of the following logical expressions would result in a true result?", "1===one", "'1'===1", "@1=='1'", "Both a and c"]
+    ["Which of the following logical expressions would result in a true result?", "1===one", "'1'===1", "@1=='1'", "Both a and c"],
+    ["Which HTML element do you put the JavaScript in?","<JavaScript>","@<script>","<element>","<addScript>"],
+    ["How do you call the function named 'execute' in JavaScript?","function = execute","@execute()","function execute","execute"],
+    ["What is the correct syntax for writing an IF statement in JavaScript?","if x === false then","if [x === false]","if x === false else","@if (x === false)"],
+    ["What is the correct way to start a 'for' loop?","for i=0; i++","for (i===0; i<7; i++)","@for (i=0;i<=7;i++)","for (i=o,i<=7,i++)"],
+    ["What is the correct way to add a comment in JavaScript?","@//comment","<!--comment-->","<*comment*>","#comment"]
 ]
+
 // list of various variables that need to be called globally accross multiple functions
 let secondsRemaining = 60;
 var correctAnswerCount;
