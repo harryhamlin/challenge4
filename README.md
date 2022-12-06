@@ -1,39 +1,37 @@
-# Challenge 03: Random Password Generator - Due Nov 28, 2022
+# Challenge 03: Random Password Generator - Due Dec 5, 2022
 
 ## Introduction
 
-The purpose of this challenge was to familiarize me with the use of Javascript to perform logical functions that result in an action being performed, in this case the generation of a random password.
+The purpose of this challenge was to familiarize me with the use of APIs and DOM manipulation through the use of javaScript.
 
 ## Techniques Used
 
-I employed the use of a multitude of if statements; variable declarations; various methods including window.prompt, window.confirm, isFinite, floor, random, isInteger, length, querySelector, addEventListener, and split; for intirations; and various concatenation techniques.
+I employed the use of a multitude of document methods, including query selectors, create elements, append elements, and others, and employed a number of javascript methods, including timer intervals, local storage, and others.
 
 ## Examples of Use
 
-A successful execution of the password generator results in a random password being generated with the parameters selected by the user, as demonstrated here:
+Upon load, users are presented with a blank game interface and a start button:
 
-<img src="assets/images/successful.jpg"/>
+<img src="assets/images/onopen.jpg"/>
 
-When selecting password length, the user is prompted with this window prompt:
+User's are presended with a descending timer and a series of multiple choice questions to answer:
 
-<img src="assets/images/length_error_message.jpg"/>
+<img src="assets/images/properfunction.jpg"/>
 
-Should the user input a string, they are presented with this error message in the text area:
+Should the user answer the question wrong, their selected answer is highlighed in red, the correct answer highlighted in green, and 5 seconds are subtracted from the clock before the next question is presented:
 
-<img src="assets/images/nan_error_message.jpg"/>
+<img src="assets/images/incorrectanswer.jpg"/>
 
-If the user inputs an integer outside of the requested range or a non-integer, the following error message appears in the text area:
+If the user answers a question correctly, their answer is highlighted in green and the next question is presented.
 
-<img src="assets/images/length_error_message.jpg"/>
+At the end of the game (if time runs out or all questions have been attempted), users are presented with their score and an input through which they can submit their scores to be stored locally on their computer:
 
-If the user inputs an invalid entry in this stage, the program terminates and the user must start over.
+<img src="assets/images/scoresubmit.jpg"/>
 
-After selecting the length of password, the user is prompted with a series of questions about what type of characters they would like used:
+After submission, the user is presented with the highscores:
 
-<img src="assets/images/character_prompt.jpg"/>
-
-If the user answers no to all character types, a similar error message to the above error messages displays in the textarea.
+<img src="assets/images/hiscorelist.jpg"/>
 
 ## Link to Deployed Application
 
-<a href="https://harryhamlin.github.io/randompasswordgenerator/">https://harryhamlin.github.io/randompasswordgenerator/</a>
+<a href="https://harryhamlin.github.io/javascriptquiz/">https://harryhamlin.github.io/javascriptquiz/</a>

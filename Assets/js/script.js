@@ -38,7 +38,6 @@ var buttonD;
 
 // initialize function selects the question from the questionBank array, then creates elements through manipulation of the dom tree, the check function and addAnswerClass are called within this function, as described below
 function initializeGame() {
-    console.log("initializeGame");
     question = questionBank[questionBankProgress];
     questionBankProgress++;
     if (questionBankProgress > questionBank.length) {
@@ -63,7 +62,6 @@ function initializeGame() {
 
 // the check function checks if the answer associated with each of the possible answers includes the @ symbol, and returns an answer to be displayed without the @ symbol indicating the correct answer
 function check(x) {
-    console.log("check(x)")
     if (question[x].includes("@")) {
         let rawAnswer = question[x]
         let replacedAnswer = rawAnswer.replace("@", "");
@@ -75,9 +73,8 @@ function check(x) {
     }
 }
 
-// addAnswerClass adds an .answer class to the button element that contains the correct answer
+// addAnswerClass adds an .answer class to the button array element that contains the correct answer
 function addAnswerClass() {
-    console.log("addAnswerClass")
     for (let i = 1; i < 5; i++) {
         if (question[i].includes("@")) {
             if (i === 1) {
@@ -95,7 +92,6 @@ function addAnswerClass() {
 
 // the coundown function is a timer for the overall game that has its elements called globally so that the interval can be called and cleared elsewear and with a flexible interval length
 function countDown(x) {
-    console.log("countDown(x)");
     timerInterval = setInterval(function () {
         x--;
         secondsRemaining = x;
@@ -113,7 +109,6 @@ function countDown(x) {
 // the countDownMini function is a smaller countdown timer that (as described later) gives the user the opportunity to see if their answer was correct or not with a color change. this function also executes the clearAnswerBank and initialize functions thus starting the next question.
 function countDownMini(z) {
     z--;
-    console.log("countDownMini()");
     var timerIntervalMini = setInterval(function () {
         if (z === 0) {
             clearAnswerBank();
@@ -125,7 +120,6 @@ function countDownMini(z) {
 
 // the clearAnswerBank function removes all of the elements created in the initialize function and creating a blank slate for the next question
 function clearAnswerBank() {
-    console.log("clearAnswerBank()")
     buttonA.remove();
     buttonB.remove();
     buttonC.remove();
@@ -135,7 +129,6 @@ function clearAnswerBank() {
 
 // the clearGameOver function provides a wrap up message for the user after they've submitted their initials
 function clearGameOver() {
-    console.log("clearGameOver()")
     inputEl.remove();
     h4El.textContent = "Thanks for Playing. Refresh to play again"
     initialSubmitEl.remove();
@@ -143,7 +136,6 @@ function clearGameOver() {
 
 // the gameover function clears the timer interval from the countDown function and clears the main box with the clearAnswerBank function before creating an input with a submit button and directions to collect the user's score
 function gameOver() {
-    console.log("gameOver()")
     clearInterval(timerInterval);
     clearAnswerBank();
     inputEl.setAttribute("type", "text");
@@ -159,7 +151,6 @@ function gameOver() {
 
 // saveScore first checks that the user entered their initials only, and then changes them to upper-case for consistencies sake and creates an array including the players win percentage and their entered initials (saved to the variable playerInitials in the event listiner for the submit button) and is stored locally. additional high scores are appended to the array as they're entered. after submission, the clearGameOver function is executed to provide a clear-slate for the user initials input.
 function saveScore() {
-    console.log("saveScore()")
     if (playerInitials.length > 3 || playerInitials.length === 0) {
         window.alert("Please Enter Only Your Initials (3 Character Max)");
         inputEl.value = ("");
@@ -193,7 +184,6 @@ function addHighScoreBox() {
 
 // the executeHiSchoresList function writes the high schores into the highschores box by using a for loop to pring the scores in that box using the locally created heading element
 function executeHiScoreList() {
-    console.log("executeHiScoreList()")
     hiScoreList = JSON.parse(localStorage.getItem("High-Score-List"));
     if (hiScoreList !== null) {
         for (let i = 0; i < 5; i++) {
@@ -207,14 +197,12 @@ function executeHiScoreList() {
 
 // the correctAnswer function adds together the user's correct answers throughout the game, it has a the countDownMini function in place to allow the user to briefly see their selected correct answer turn green before clearing the answer bank and initializing a new question
 function correctAnswer() {
-    console.log("correctAnswer()")
     correctAnswerCount++;
     countDownMini(1);
 }
 
 //the incorrectAnswer function first turns the correct answer green so the user gets the feedback that their answer was wrong, and it tabulates the user's incorrect answers. the timer interval from countDown is then cleared in order to manipulate the time remaining. if a wrong answer is selected, 5 seconds is subtracted from the clock and then the timer is re-initialized at the new time. the countDownMini function creates a brief pause so the user can see the correct answer, before clearing the answer bank and initializing a new question. if the timer is less than 5 seconds remaining and a wrong answer is selected, then the answer bank is immediately cleared using clearAnswerBank and the gameOver function is executed
 function incorrectAnswer() {
-    console.log("incorrectAnswer()")
     answerEl = document.querySelector(".answer");
     answerEl.setAttribute("class", "correct answer");
     incorrectAnswerCount++;
@@ -244,7 +232,6 @@ startButton.addEventListener("click", function () {
 // this is an event listener for the div element containing the answers, and using event bubbling it notes the selected answer and checks for the presence of the "answer" class as assigned in the addAnswerClass function. all buttons are disabled after the initial click. if the correct answer was selected, the class .correct is added in order to turn the button green the the correctAnswer function is initialized. if the incorrect answer was selected then a .incorrect class is added to turn the button red and the incorretAnswer function is executed
 function answerEventListener() {
     answerBank.addEventListener("click", function answerSelect(event) {
-        console.log("addEventListener()")
         let selectedAnswer = event.target;
         buttonA.disabled = true;
         buttonB.disabled = true;
@@ -256,6 +243,11 @@ function answerEventListener() {
         } else if (!selectedAnswer.classList.contains("answer") && (!selectedAnswer.classList.contains("answer-bank"))) {
             selectedAnswer.setAttribute("class", "incorrect");
             incorrectAnswer();
+        } else if (selectedAnswer.classList.contains("answer-bank")) {
+            buttonA.disabled = false;
+            buttonB.disabled = false;
+            buttonC.disabled = false;
+            buttonD.disabled = false;
         }
     })
 }
