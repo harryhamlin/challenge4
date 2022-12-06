@@ -102,16 +102,19 @@ button {
   width: 100%;
 }
 
+/* specific properties for the start button only */
 #start-button {
   width: 10%;
   margin: .5% .5% .5% .5%;
   background-color: var(--teal);
 }
 
+/* this is the class assigned to correct answers turning them green */
 .correct {
   background-color: lightgreen;
 }
 
+/* this is the class assigned to incorrect answers turning them red */
 .incorrect {
   background-color: lightpink;
 }
@@ -120,5 +123,4 @@ footer {
   font-size: 10px;
   display: flex;
   justify-content: center;
-  
 }

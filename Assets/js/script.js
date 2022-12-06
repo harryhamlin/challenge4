@@ -1,11 +1,3 @@
-//leftover debugging:
-//      no sorting of hi-scores
-//      when the timer starts, for a brief second it's value is null, is that always the case?
-//      pressing start the second time advances everything twice as fast
-//      theres something weird going on with the question variable and how it's defined
-//      how do I remove the subsequent click sensitivity, can I remove the event listener within the event listiner?
-//      if i get rid of the minitimer (and the colored buttons), many of these problems are fixed, although strangely still not the advancing twice as fast on the second round
-
 // list of global dom variables
 let containerEl = document.querySelector(".container");
 let startButton = document.querySelector("#start-button");
@@ -37,6 +29,10 @@ let questionBankProgress;
 var hiScoreList;
 var scoreObjectArray;
 var playerInitials;
+var buttonA;
+var buttonB;
+var buttonC;
+var buttonD;
 
 
 
@@ -114,6 +110,19 @@ function countDown(x) {
     }, 1000)
 }
 
+// the countDownMini function is a smaller countdown timer that (as described later) gives the user the opportunity to see if their answer was correct or not with a color change. this function also executes the clearAnswerBank and initialize functions thus starting the next question.
+function countDownMini(z) {
+    z--;
+    console.log("countDownMini()");
+    var timerIntervalMini = setInterval(function () {
+        if (z === 0) {
+            clearAnswerBank();
+            initializeGame();
+            clearInterval(timerIntervalMini);
+        }
+    }, 500)
+}
+
 // the clearAnswerBank function removes all of the elements created in the initialize function and creating a blank slate for the next question
 function clearAnswerBank() {
     console.log("clearAnswerBank()")
@@ -124,17 +133,12 @@ function clearAnswerBank() {
     object.textContent = "";
 }
 
-// the countDownMini function is a smaller countdown timer that (as described later) gives the user the opportunity to see if their answer was correct or not with a color change. this function also executes the clearAnswerBank and initialize functions thus starting the next question.
-function countDownMini(x) {
-    x--;
-    console.log("countDownMini()");
-    var timerIntervalMini = setInterval(function () {
-        if (x === 0) {
-            clearAnswerBank();
-            initializeGame();
-            clearInterval(timerIntervalMini);
-        }
-    }, 250)
+// the clearGameOver function provides a wrap up message for the user after they've submitted their initials
+function clearGameOver() {
+    console.log("clearGameOver()")
+    inputEl.remove();
+    h4El.textContent = "Thanks for Playing. Refresh to play again"
+    initialSubmitEl.remove();
 }
 
 // the gameover function clears the timer interval from the countDown function and clears the main box with the clearAnswerBank function before creating an input with a submit button and directions to collect the user's score
@@ -176,6 +180,7 @@ function saveScore() {
     }
 }
 
+// this function creates a hi-score box through dom manipulation that displays high-scores after the game
 function addHighScoreBox() {
     divEl.setAttribute("class", "box");
     divEl.setAttribute("id", "score");
@@ -190,7 +195,6 @@ function addHighScoreBox() {
 function executeHiScoreList() {
     console.log("executeHiScoreList()")
     hiScoreList = JSON.parse(localStorage.getItem("High-Score-List"));
-    console.log(hiScoreList.sort())
     if (hiScoreList !== null) {
         for (let i = 0; i < 5; i++) {
             var score = document.createElement("h6");
@@ -199,20 +203,6 @@ function executeHiScoreList() {
             scoreRecord.appendChild(score);
         }
     }
-}
-
-// the clearGameOver function provides a wrap up message for the user after they've submitted their initials
-function clearGameOver() {
-    console.log("clearGameOver()")
-    inputEl.remove();
-    h4El.textContent = "Thanks for Playing. Press start to play again"
-    initialSubmitEl.remove();
-}
-
-function clearHiScoreBox() {
-    divEl.remove();
-    h2El.remove();
-    divElAnswerBank.remove();
 }
 
 // the correctAnswer function adds together the user's correct answers throughout the game, it has a the countDownMini function in place to allow the user to briefly see their selected correct answer turn green before clearing the answer bank and initializing a new question
@@ -239,7 +229,6 @@ function incorrectAnswer() {
 
 // this is an event listener for the start button looking for a click, and initializing the game with a total time of 60 seconds available. the timer box is reset at the beggining of the local function so another game can be initialized after completing the first. the start button is hidden during the game in order to keep the user from clicking on it during the game
 startButton.addEventListener("click", function () {
-    clearHiScoreBox();
     correctAnswerCount = 0;
     incorrectAnswerCount = 0;
     questionBankProgress = 0;
@@ -252,11 +241,15 @@ startButton.addEventListener("click", function () {
     answerEventListener();
 })
 
-// this is an event listener for the div element containing the answers, and using event bubbling it notes the selected answer and checks for the presence of the "answer" class as assigned in the addAnswerClass function. if the correct answer was selected, the class .correct is added in order to turn the button green the the correctAnswer function is initialized. if the incorrect answer was selected then a .incorrect class is added to turn the button red and the incorretAnswer function is executed
+// this is an event listener for the div element containing the answers, and using event bubbling it notes the selected answer and checks for the presence of the "answer" class as assigned in the addAnswerClass function. all buttons are disabled after the initial click. if the correct answer was selected, the class .correct is added in order to turn the button green the the correctAnswer function is initialized. if the incorrect answer was selected then a .incorrect class is added to turn the button red and the incorretAnswer function is executed
 function answerEventListener() {
     answerBank.addEventListener("click", function answerSelect(event) {
         console.log("addEventListener()")
         let selectedAnswer = event.target;
+        buttonA.disabled = true;
+        buttonB.disabled = true;
+        buttonC.disabled = true;
+        buttonD.disabled = true;
         if (selectedAnswer.classList.contains("answer") && (!selectedAnswer.classList.contains("answer-bank"))) {
             selectedAnswer.setAttribute("class", "correct answer");
             correctAnswer();
@@ -270,9 +263,5 @@ function answerEventListener() {
 // this is the event listener for the submission of user scores and initials and initializes the savescore function upon clicking
 initialSubmitEl.addEventListener("click", function () {
     playerInitials = inputEl.value;
-    startButton.hidden = false;
     saveScore();
 })
-
-// the executeHiScoreList function is called upon initialization of the page to ensure the high-scores box is filled
-// executeHiScoreList();
